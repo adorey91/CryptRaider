@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\githubrepos\\cryptraider\\cryptraider\\source\\cryptraider\\cryptraider.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\githubrepos\\cryptraider\\cryptraider\\intermediate\\build\\win64\\x64\\cryptraider\\development\\engine\\sharedpch.engine.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "e:\\githubrepos\\cryptraider\\cryptraider\\intermediate\\build\\win64\\x64\\unrealgame\\development\\cryptraider\\definitions.cryptraider.h",
+            "e:\\githubrepos\\cryptraider\\cryptraider\\source\\cryptraider\\cryptraider.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

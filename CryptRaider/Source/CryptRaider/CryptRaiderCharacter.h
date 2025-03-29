@@ -44,6 +44,7 @@ class ACryptRaiderCharacter : public ACharacter
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
+
 	
 public:
 	ACryptRaiderCharacter();

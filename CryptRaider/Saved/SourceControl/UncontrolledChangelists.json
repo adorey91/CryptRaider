@@ -8,6 +8,14 @@
 				"E:/GithubRepos/CryptRaider/CryptRaider/Content/MedievalDungeon/Maps/Demonstration.umap",
 				"E:/GithubRepos/CryptRaider/CryptRaider/Content/Dungeon.umap",
 				"E:/GithubRepos/CryptRaider/CryptRaider/Content/MedievalDungeon/Materials/M_Tiling_Master.uasset",
+				"E:/GithubRepos/CryptRaider/CryptRaider/Content/BP_Torch_Dungeon.uasset",
+				"E:/GithubRepos/CryptRaider/CryptRaider/Content/BP_Torch_Crypt.uasset",
+				"E:/GithubRepos/CryptRaider/CryptRaider/Content/MedievalDungeon/Meshes/Architecture/Dungeon/SM_Floor.uasset",
+				"E:/GithubRepos/CryptRaider/CryptRaider/Content/BP_Player.uasset",
+				"E:/GithubRepos/CryptRaider/CryptRaider/Content/BP_CryptRaiderGameMode.uasset",
+				"E:/GithubRepos/CryptRaider/CryptRaider/Content/Input/IA_Grab.uasset",
+				"E:/GithubRepos/CryptRaider/CryptRaider/Content/FirstPerson/Input/IMC_Default.uasset",
+				"E:/GithubRepos/CryptRaider/CryptRaider/Content/FirstPerson/Input/Actions/IA_Grab.uasset",
 				"E:/GithubRepos/CryptRaider/CryptRaider/Content/__ExternalActors__/FirstPerson/Maps/FirstPersonMap/F/2F/0SPQG8P507LI9VUAFG20OA.uasset",
 				"E:/GithubRepos/CryptRaider/CryptRaider/Content/__ExternalActors__/FirstPerson/Maps/FirstPersonMap/E/UE/YUZ9741T50O1SYRX90OB0S.uasset",
 				"E:/GithubRepos/CryptRaider/CryptRaider/Content/__ExternalActors__/FirstPerson/Maps/FirstPersonMap/E/MX/R1GV431P5FDO08OFULRA01.uasset",
@@ -76,8 +84,7 @@
 				"E:/GithubRepos/CryptRaider/CryptRaider/Content/__ExternalObjects__/FirstPerson/Maps/FirstPersonMap/1/KG/WXBHR5YF7EMN5ENSKZGERE.uasset",
 				"E:/GithubRepos/CryptRaider/CryptRaider/Content/__ExternalActors__/FirstPerson/Maps/FirstPersonMap/D/0W/E1FKEGVKGOLM7HGLQPCIPO.uasset",
 				"E:/GithubRepos/CryptRaider/CryptRaider/Content/FirstPerson/Maps/FirstPersonMap.umap",
-				"E:/GithubRepos/CryptRaider/CryptRaider/Content/FirstPerson/Maps/FirstPersonMap_BuiltData.uasset",
-				"E:/GithubRepos/CryptRaider/CryptRaider/Content/BP_Torch_Dungeon.uasset"
+				"E:/GithubRepos/CryptRaider/CryptRaider/Content/FirstPerson/Maps/FirstPersonMap_BuiltData.uasset"
 			]
 		}
 	]

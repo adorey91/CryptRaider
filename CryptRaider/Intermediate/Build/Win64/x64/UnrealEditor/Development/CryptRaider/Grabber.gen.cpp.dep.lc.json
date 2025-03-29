@@ -1,0 +1,15 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\githubrepos\\cryptraider\\cryptraider\\intermediate\\build\\win64\\unrealeditor\\inc\\cryptraider\\uht\\grabber.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\githubrepos\\cryptraider\\cryptraider\\intermediate\\build\\win64\\x64\\cryptraidereditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "e:\\githubrepos\\cryptraider\\cryptraider\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\cryptraider\\definitions.cryptraider.h",
+            "e:\\githubrepos\\cryptraider\\cryptraider\\source\\cryptraider\\grabber.h",
+            "e:\\githubrepos\\cryptraider\\cryptraider\\intermediate\\build\\win64\\unrealeditor\\inc\\cryptraider\\uht\\grabber.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

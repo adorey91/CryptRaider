@@ -1,0 +1,24 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\githubrepos\\cryptraider\\cryptraider\\intermediate\\build\\win64\\unrealgame\\inc\\cryptraider\\uht\\cryptraidercharacter.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\githubrepos\\cryptraider\\cryptraider\\intermediate\\build\\win64\\x64\\cryptraider\\development\\engine\\sharedpch.engine.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "e:\\githubrepos\\cryptraider\\cryptraider\\intermediate\\build\\win64\\x64\\unrealgame\\development\\cryptraider\\definitions.cryptraider.h",
+            "e:\\githubrepos\\cryptraider\\cryptraider\\source\\cryptraider\\cryptraidercharacter.h",
+            "e:\\epicgames\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\gameframework\\character.h",
+            "e:\\epicgames\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\gameframework\\charactermovementreplication.h",
+            "e:\\epicgames\\ue_5.5\\engine\\source\\runtime\\net\\core\\public\\net\\core\\nettoken\\nettokenexportcontext.h",
+            "e:\\epicgames\\ue_5.5\\engine\\source\\runtime\\experimental\\iris\\core\\public\\iris\\serialization\\irisobjectreferencepackagemap.h",
+            "e:\\epicgames\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealgame\\inc\\iriscore\\uht\\irisobjectreferencepackagemap.generated.h",
+            "e:\\epicgames\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealgame\\inc\\engine\\uht\\charactermovementreplication.generated.h",
+            "e:\\epicgames\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\gameframework\\rootmotionsource.h",
+            "e:\\epicgames\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealgame\\inc\\engine\\uht\\rootmotionsource.generated.h",
+            "e:\\epicgames\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealgame\\inc\\engine\\uht\\character.generated.h",
+            "e:\\githubrepos\\cryptraider\\cryptraider\\intermediate\\build\\win64\\unrealgame\\inc\\cryptraider\\uht\\cryptraidercharacter.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
