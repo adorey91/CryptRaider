@@ -32,6 +32,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Release();
 
+
 	
 	private:
 	UPROPERTY(EditAnywhere)
@@ -44,4 +45,6 @@ public:
 	float GrabRadius = 100;
 	
 	UPhysicsHandleComponent* GetPhysicsHandle() const;
+
+	bool GetGrabbableInReach(FHitResult& OutHitResult) const;
 };
