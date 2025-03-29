@@ -1,8 +1,0 @@
-{
-	"SourceFiles": [
-		"E:\\GithubRepos\\CryptRaider\\CryptRaider\\Source\\CryptRaider\\CryptRaider.Build.cs",
-		"E:\\GithubRepos\\CryptRaider\\CryptRaider\\Source\\CryptRaider.Target.cs",
-		"E:\\GithubRepos\\CryptRaider\\CryptRaider\\Source\\CryptRaiderEditor.Target.cs"
-	],
-	"EngineVersion": "5.5.4"
-}
