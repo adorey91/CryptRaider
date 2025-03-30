@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/BoxComponent.h"
 #include "Mover.h"
+#include "DoorRotator.h"
 #include "TriggerComponent.generated.h"
 
 /**
@@ -29,12 +30,20 @@ virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 UFUNCTION(BlueprintCallable)
 void SetMover(UMover* Mover);
 
+UFUNCTION(BlueprintCallable)
+void SetMultipleMovers(TArray<UMover*> Mover);
+
+	UFUNCTION(BlueprintCallable)
+	void SetDoorRotator(UDoorRotator* DoorRotator);
+
 private:
 
 UPROPERTY(EditAnywhere)
 FName UnlockTag;
 
-TArray<UMover>* Movers;
+	TArray<UMover*> Movers;
+
+	UDoorRotator* DoorRotator;
 
 AActor* GetAcceptableActor() const;
 

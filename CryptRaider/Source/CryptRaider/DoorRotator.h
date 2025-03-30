@@ -24,10 +24,8 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-
-	UFUNCTION(BlueprintCallable)
-	void OpenDoor(float DeltaTime);	
-
+	void SetShouldRotate(bool ShouldRotate);
+	
 	UPROPERTY(EditAnywhere, Category = "Door Settings")
 	float OpenAngle;
 	

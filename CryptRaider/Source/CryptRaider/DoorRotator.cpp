@@ -52,15 +52,13 @@ void UDoorRotator::TickComponent(float DeltaTime, ELevelTick TickType, FActorCom
 
 	if(ShouldOpen)
 	{
-		OpenDoor(DeltaTime);			
-	}
-}
-
-void UDoorRotator::OpenDoor(float DeltaTime)
-{
-    // Set the target immediately so it starts moving
-	
 		FRotator CurrentRotation = DoorComponent->GetComponentRotation();
         FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaTime, OpenSpeed);
         DoorComponent->SetWorldRotation(NewRotation);
+	}
+}
+
+void UDoorRotator::SetShouldRotate(bool ShouldRotate)
+{
+	ShouldOpen = ShouldRotate;
 }
