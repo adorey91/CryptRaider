@@ -39,6 +39,15 @@ void UMover::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 
 		FVector NewLocation = FMath::VInterpConstantTo(CurrentLocation, TargetLocation, DeltaTime, Speed);
 
+		if (CurrentLocation != NewLocation)
+		{
+			ShouldPlaySFX = true;
+		}
+		else
+		{
+			ShouldPlaySFX = false;
+		}
+		
 		GetOwner()->SetActorLocation(NewLocation);
 	}
 }
@@ -47,4 +56,5 @@ void UMover::SetShouldMove(bool NewShouldMove)
 {
 	ShouldMove = NewShouldMove;
 }
+
 

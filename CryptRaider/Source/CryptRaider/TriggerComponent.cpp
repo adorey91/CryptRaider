@@ -50,6 +50,11 @@ void UTriggerComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 		}
 		else
 		{
+			if (!PlayAudio)
+			{
+				StartAudioEvent.Broadcast();
+				PlayAudio = true;
+			}
 			DoorRotator->SetShouldRotate(true);
 		}
 	}
@@ -89,6 +94,7 @@ void UTriggerComponent::SetDoorRotator(UDoorRotator* NewDoorRotator)
 {
 	DoorRotator = NewDoorRotator;
 }
+
 
 
 AActor* UTriggerComponent::GetAcceptableActor() const

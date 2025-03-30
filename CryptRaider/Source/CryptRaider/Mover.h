@@ -36,4 +36,8 @@ private:
 	FVector OriginalLocation;
 
 	bool ShouldMove = false;
+
+	public:
+	UPROPERTY(BlueprintReadWrite)
+	bool ShouldPlaySFX;
 };

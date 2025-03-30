@@ -8,9 +8,9 @@
 #include "DoorRotator.h"
 #include "TriggerComponent.generated.h"
 
-/**
- * 
- */
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FStartEvent);
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CRYPTRAIDER_API UTriggerComponent : public UBoxComponent
 {
@@ -27,6 +27,9 @@ public:
 // Called every frame
 virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+UPROPERTY(BlueprintAssignable)
+	FStartEvent StartAudioEvent;
+	
 UFUNCTION(BlueprintCallable)
 void SetMover(UMover* Mover);
 
@@ -47,4 +50,5 @@ FName UnlockTag;
 
 AActor* GetAcceptableActor() const;
 
+	bool PlayAudio = false;
 };
