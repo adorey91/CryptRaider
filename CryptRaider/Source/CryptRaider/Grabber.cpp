@@ -82,6 +82,9 @@ void UGrabber::Release()
 
 UPhysicsHandleComponent *UGrabber::GetPhysicsHandle() const
 {
+	FVector Start = GetComponentLocation();
+	FVector End =  Start + GetForwardVector() * MaxGrabDistance;
+	DrawDebugLine(GetWorld(), Start, End, FColor::Red);
 	UPhysicsHandleComponent *Result = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 
 	if (Result == nullptr)
