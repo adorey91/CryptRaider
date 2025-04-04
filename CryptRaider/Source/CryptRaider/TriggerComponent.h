@@ -51,4 +51,9 @@ FName UnlockTag;
 AActor* GetAcceptableActor() const;
 
 	bool PlayAudio = false;
+
+	bool Triggered = false;
+
+	UFUNCTION()
+	void DestroyActorWithDelay(AActor* Actor, float Delay);
 };

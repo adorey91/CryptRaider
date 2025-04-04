@@ -53,8 +53,21 @@ void UDoorRotator::TickComponent(float DeltaTime, ELevelTick TickType, FActorCom
 	if(ShouldOpen)
 	{
 		FRotator CurrentRotation = DoorComponent->GetComponentRotation();
+		if (CurrentRotation.Equals(TargetRotation, 2.0f))
+		{
+			ShouldOpen = false;
+			OnStopSound.Broadcast();
+			return;
+		}
+		
         FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaTime, OpenSpeed);
         DoorComponent->SetWorldRotation(NewRotation);
+
+		if (!ShouldPlaySound)
+		{
+			OnPlaySound.Broadcast();
+			ShouldPlaySound = true;
+		}
 	}
 }
 

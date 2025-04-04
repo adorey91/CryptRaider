@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "Mover.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlaySound);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnStopSound);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CRYPTRAIDER_API UMover : public UActorComponent
@@ -26,6 +28,14 @@ public:
 
 	void SetShouldMove(bool ShouldMove);
 
+	bool GetShouldMove() const;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnPlaySound OnPlaySound;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnStopSound OnStopSound;
+	
 private:
 	UPROPERTY(EditAnywhere)
 	FVector MoveOffset;
@@ -33,11 +43,16 @@ private:
 	UPROPERTY(EditAnywhere)
 	float MoveTime = 4;
 
-	FVector OriginalLocation;
 
 	bool ShouldMove = false;
 
 	public:
+		UPROPERTY(BlueprintReadOnly)
+	FVector OriginalLocation;
+
 	UPROPERTY(BlueprintReadWrite)
-	bool ShouldPlaySFX;
+	bool ShouldPlaySFX = false;
+
+	UPROPERTY(BlueprintReadOnly)
+	FVector TargetLocation;
 };

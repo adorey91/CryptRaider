@@ -22,6 +22,7 @@ void UMover::BeginPlay()
 	Super::BeginPlay();
 
 	OriginalLocation = GetOwner()->GetActorLocation();
+	TargetLocation = OriginalLocation + MoveOffset;
 }
 
 
@@ -30,31 +31,41 @@ void UMover::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-
 	if (ShouldMove)
 	{
+		
 		FVector CurrentLocation = GetOwner()->GetActorLocation();
-		FVector TargetLocation = OriginalLocation + MoveOffset;
+
+		if (CurrentLocation == TargetLocation)
+		{
+			ShouldMove = false;
+			OnStopSound.Broadcast();
+			return;
+		}
+
+		if (!ShouldPlaySFX)
+		{
+			OnPlaySound.Broadcast();
+			ShouldPlaySFX = true;
+		}
+		
 		float Speed = FVector::Dist(OriginalLocation, TargetLocation) / MoveTime;
 
 		FVector NewLocation = FMath::VInterpConstantTo(CurrentLocation, TargetLocation, DeltaTime, Speed);
-
-		if (CurrentLocation != NewLocation)
-		{
-			ShouldPlaySFX = true;
-		}
-		else
-		{
-			ShouldPlaySFX = false;
-		}
 		
 		GetOwner()->SetActorLocation(NewLocation);
 	}
 }
 
+
 void UMover::SetShouldMove(bool NewShouldMove)
 {
 	ShouldMove = NewShouldMove;
+}
+
+bool UMover::GetShouldMove() const
+{
+	return ShouldMove;
 }
 
 

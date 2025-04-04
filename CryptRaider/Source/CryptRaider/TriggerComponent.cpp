@@ -37,7 +37,7 @@ void UTriggerComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 		UPrimitiveComponent* Component = Cast<UPrimitiveComponent>(Actor->GetRootComponent());
 		if (Component != nullptr)
 		{
-			Actor->AttachToComponent(this, FAttachmentTransformRules::KeepWorldTransform);
+			Actor->AttachToComponent(this, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 			Component->SetSimulatePhysics(false);
 		}
 
@@ -56,6 +56,8 @@ void UTriggerComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 				PlayAudio = true;
 			}
 			DoorRotator->SetShouldRotate(true);
+			// 🔹 Destroy the key after 2 seconds (adjust delay as needed)
+			DestroyActorWithDelay(Actor, 2.0f);
 		}
 	}
 	else
@@ -111,4 +113,19 @@ AActor* UTriggerComponent::GetAcceptableActor() const
 	}
 
 	return nullptr;
+}
+
+void UTriggerComponent::DestroyActorWithDelay(AActor* Actor, float Delay)
+{
+	if (Actor != nullptr)
+	{
+		FTimerHandle TimerHandle;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle,[Actor]()
+		{
+			if (Actor)
+			{
+				Actor->Destroy();
+			}
+		}, Delay, false);
+	}
 }

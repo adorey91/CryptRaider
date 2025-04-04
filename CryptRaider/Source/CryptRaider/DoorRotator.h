@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "DoorRotator.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlaySfx);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnStopSfx);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CRYPTRAIDER_API UDoorRotator : public UActorComponent
@@ -16,6 +18,12 @@ public:
 	// Sets default values for this component's properties
 	UDoorRotator();
 
+	UPROPERTY(BlueprintAssignable)
+	FOnPlaySfx OnPlaySound;
+	
+	UPROPERTY(BlueprintAssignable)
+	FOnStopSfx OnStopSound;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -25,7 +33,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void SetShouldRotate(bool ShouldRotate);
-	
+
 	UPROPERTY(EditAnywhere, Category = "Door Settings")
 	float OpenAngle;
 	
@@ -38,10 +46,15 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Door Settings")
 	UStaticMeshComponent* DoorComponent;
 
-	private:
-	UPROPERTY(VisibleAnywhere, Category = "Door Settings")
-	FRotator InitialRotation;
-	UPROPERTY(VisibleAnywhere, Category = "Door Settings")
+	UPROPERTY(BlueprintReadOnly)
 	FRotator TargetRotation;
 
+private:
+	UPROPERTY(VisibleAnywhere, Category = "Door Settings")
+	FRotator InitialRotation;
+
+	bool ShouldPlaySound;
+
+	
+	
 };
