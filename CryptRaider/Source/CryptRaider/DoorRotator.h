@@ -34,6 +34,7 @@ public:
 
 	void SetShouldRotate(bool ShouldRotate);
 
+	
 	UPROPERTY(EditAnywhere, Category = "Door Settings")
 	float OpenAngle;
 	

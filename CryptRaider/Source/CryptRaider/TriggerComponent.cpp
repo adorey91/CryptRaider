@@ -26,8 +26,21 @@ void UTriggerComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 
 	if (Movers.Num() == 0 && !DoorRotator) // Check if Mover is null
 	{
-		UE_LOG(LogTemp, Error, TEXT("Mover or Door Rotator is null in UTriggerComponent! Did you forget to call SetMover? %s"),
+		UE_LOG(LogTemp, Error,
+		       TEXT("Mover or Door Rotator is null in UTriggerComponent! Did you forget to call SetMover? %s"),
 		       *ThisName);
+		return;
+	}
+
+	if (WeightedTrigger && WeightNeeded != CurrentWeight)
+	{
+		MoveObjects();
+		return;
+	}
+
+	if (WeightedTrigger && WeightNeeded == CurrentWeight)
+	{
+		DontMove();
 		return;
 	}
 
@@ -41,38 +54,56 @@ void UTriggerComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 			Component->SetSimulatePhysics(false);
 		}
 
-		if (Movers.Num() != 0)
+		if (MovesObjects)
 		{
-			for (UMover* Mover : Movers)
-			{
-				Mover->SetShouldMove(true);
-			}
+			MoveObjects();
 		}
-		else
+		else if (RotatesDoor)
 		{
-			if (!PlayAudio)
-			{
-				StartAudioEvent.Broadcast();
-				PlayAudio = true;
-			}
-			DoorRotator->SetShouldRotate(true);
-			// 🔹 Destroy the key after 2 seconds (adjust delay as needed)
-			DestroyActorWithDelay(Actor, 2.0f);
+			DoorRotate(Actor);
 		}
 	}
 	else
 	{
-		if (Movers.Num() != 0)
+		DontMove();
+	}
+}
+
+void UTriggerComponent::MoveObjects()
+{
+	if (Movers.Num() > 0)
+	{
+		for (UMover* Mover : Movers)
 		{
-			for (UMover* Mover : Movers)
-			{
-				Mover->SetShouldMove(false);
-			}
+			Mover->SetShouldOpen();
 		}
-		else
+	}
+}
+
+void UTriggerComponent::DoorRotate(AActor* Actor)
+{
+	if (!PlayAudio)
+	{
+		StartAudioEvent.Broadcast();
+		PlayAudio = true;
+	}
+	DoorRotator->SetShouldRotate(true);
+	// 🔹 Destroy the key after 2 seconds (adjust delay as needed)
+	DestroyActorWithDelay(Actor, 2.0f);
+}
+
+void UTriggerComponent::DontMove()
+{
+	if (Movers.Num() != 0)
+	{
+		for (UMover* Mover : Movers)
 		{
-			DoorRotator->SetShouldRotate(false);
+			Mover->SetShouldClose();
 		}
+	}
+	else
+	{
+		DoorRotator->SetShouldRotate(false);
 	}
 }
 
@@ -97,8 +128,6 @@ void UTriggerComponent::SetDoorRotator(UDoorRotator* NewDoorRotator)
 	DoorRotator = NewDoorRotator;
 }
 
-
-
 AActor* UTriggerComponent::GetAcceptableActor() const
 {
 	TArray<AActor*> Actors;
@@ -120,7 +149,7 @@ void UTriggerComponent::DestroyActorWithDelay(AActor* Actor, float Delay)
 	if (Actor != nullptr)
 	{
 		FTimerHandle TimerHandle;
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle,[Actor]()
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [Actor]()
 		{
 			if (Actor)
 			{

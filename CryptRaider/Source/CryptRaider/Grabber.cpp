@@ -3,6 +3,8 @@
 #include "Grabber.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
+#include "KismetTraceUtils.h"
+#include "Chaos/Deformable/ChaosDeformableCollisionsProxy.h"
 
 // Sets default values for this component's properties
 UGrabber::UGrabber()
@@ -50,6 +52,12 @@ void UGrabber::Grab()
 	{
 		UPrimitiveComponent *HitComponent = HitResult.GetComponent();
 
+		// Makes sure player can only pick up grabbable things, needed this so I can block the line trace
+		if (!HitResult.GetActor()->ActorHasTag("Grabbable"))
+		{
+			return;
+		}
+		
 		if (HitComponent != nullptr)
 		{
 			HitComponent->SetSimulatePhysics(true);
@@ -57,8 +65,7 @@ void UGrabber::Grab()
 			HitResult.GetActor()->Tags.Add("Grabbed");
 		}
 		
-
-		UE_LOG(LogTemp, Display, TEXT("Grabbed: %s"), *HitResult.GetActor()->GetName());
+		// UE_LOG(LogTemp, Display, TEXT("Grabbed: %s"), *HitResult.GetActor()->GetName());
 		PhysicsHandle->GrabComponentAtLocationWithRotation(
 			HitComponent,
 			NAME_None,
@@ -84,7 +91,7 @@ UPhysicsHandleComponent *UGrabber::GetPhysicsHandle() const
 {
 	FVector Start = GetComponentLocation();
 	FVector End =  Start + GetForwardVector() * MaxGrabDistance;
-	DrawDebugLine(GetWorld(), Start, End, FColor::Red);
+	// DrawDebugLine(GetWorld(), Start, End, FColor::Red);
 	UPhysicsHandleComponent *Result = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 
 	if (Result == nullptr)
@@ -99,7 +106,7 @@ bool UGrabber::GetGrabbableInReach(FHitResult& OutHitResult) const
 {
 	FVector Start = GetComponentLocation();
 	FVector End = Start + GetForwardVector() * MaxGrabDistance;
-	DrawDebugLine(GetWorld(), Start, End, FColor::Red);
+	// DrawDebugLine(GetWorld(), Start, End, FColor::Red);
 
 	FCollisionShape Sphere = FCollisionShape::MakeSphere(GrabRadius);
 	return GetWorld()->SweepSingleByChannel(
@@ -109,3 +116,28 @@ bool UGrabber::GetGrabbableInReach(FHitResult& OutHitResult) const
 		ECC_GameTraceChannel2,
 		Sphere);
 }
+
+void UGrabber::CheckForHighlight()
+{
+	FVector Start = GetComponentLocation();
+	FVector End = Start + GetForwardVector() * MaxGrabDistance * 2;
+
+	bool HasHit = false;
+	TArray<FHitResult> HitResults;
+
+	DrawDebugSphereTraceMulti(GetWorld(), Start, End, GrabRadius, EDrawDebugTrace::ForDuration,
+	HasHit, HitResults, FColor::Blue, FColor::Red, 1.0f);
+	
+	if (HasHit)
+	{
+		for (const FHitResult& Hit : HitResults)
+		{
+			AActor* HitActor = Hit.GetActor();
+			if (HitActor)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Hit actor: %s"), *HitActor->GetName());
+			}
+		}
+	}
+}
+

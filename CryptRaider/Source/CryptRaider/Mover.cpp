@@ -21,8 +21,9 @@ void UMover::BeginPlay()
 {
 	Super::BeginPlay();
 
-	OriginalLocation = GetOwner()->GetActorLocation();
-	TargetLocation = OriginalLocation + MoveOffset;
+	// Keeps track of original location & target location
+	StartingLocation = GetOwner()->GetActorLocation();
+	TargetLocation = StartingLocation + MoveOffset;
 }
 
 
@@ -33,39 +34,76 @@ void UMover::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 
 	if (ShouldMove)
 	{
-		
-		FVector CurrentLocation = GetOwner()->GetActorLocation();
-
-		if (CurrentLocation == TargetLocation)
-		{
-			ShouldMove = false;
-			OnStopSound.Broadcast();
-			return;
-		}
-
-		if (!ShouldPlaySFX)
+		CurrentLocation = GetOwner()->GetActorLocation();
+		if (!ShouldPlaySfx)
 		{
 			OnPlaySound.Broadcast();
-			ShouldPlaySFX = true;
+			ShouldPlaySfx = true;
 		}
-		
-		float Speed = FVector::Dist(OriginalLocation, TargetLocation) / MoveTime;
 
-		FVector NewLocation = FMath::VInterpConstantTo(CurrentLocation, TargetLocation, DeltaTime, Speed);
-		
-		GetOwner()->SetActorLocation(NewLocation);
+		if (ShouldOpen)
+		{
+			WillOpen(DeltaTime);
+		}
+
+		if (ShouldClose)
+		{
+			WillClose(DeltaTime);
+		}
 	}
 }
 
 
-void UMover::SetShouldMove(bool NewShouldMove)
+void UMover::SetShouldOpen()
 {
-	ShouldMove = NewShouldMove;
+	ShouldMove = true;
+	ShouldOpen = true;
+	ShouldClose = false;
 }
 
-bool UMover::GetShouldMove() const
+void UMover::SetShouldClose()
 {
-	return ShouldMove;
+	ShouldMove = true;
+	ShouldOpen = false;
+	ShouldClose = true;
 }
+
+void UMover::WillOpen(float DeltaTime)
+{
+	if (CurrentLocation == TargetLocation)
+	{
+		ResetVariables();
+		return;
+	}
+
+	float Speed = FVector::Dist(StartingLocation, TargetLocation) / MoveTime;
+	FVector NewLocation = FMath::VInterpConstantTo(CurrentLocation, TargetLocation, DeltaTime, Speed);
+	GetOwner()->SetActorLocation(NewLocation);
+}
+
+
+void UMover::WillClose(float DeltaTime)
+{
+	if (CurrentLocation == StartingLocation)
+	{
+		ResetVariables();
+		return;
+	}
+
+	float Speed = FVector::Dist(CurrentLocation, StartingLocation) / MoveTime;
+	FVector NewLocation = FMath::VInterpConstantTo(CurrentLocation, StartingLocation, DeltaTime, Speed);
+	GetOwner()->SetActorLocation(NewLocation);
+}
+
+
+void UMover::ResetVariables()
+{
+	ShouldMove = false;
+	ShouldOpen = false;
+	ShouldClose = false;
+	ShouldPlaySfx = false;
+	OnStopSound.Broadcast();
+}
+
 
 

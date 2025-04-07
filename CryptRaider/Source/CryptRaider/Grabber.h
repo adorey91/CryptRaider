@@ -32,17 +32,20 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Release();
 
-
+	UFUNCTION(BlueprintCallable)
+	void CheckForHighlight();
 	
 	private:
 	UPROPERTY(EditAnywhere)
 	float MaxGrabDistance = 400;
-	
+
 	UPROPERTY(EditAnywhere)
 	float HoldDistance = 200;
 	
 	UPROPERTY(EditAnywhere)
 	float GrabRadius = 100;
+
+	AActor* Highlighted;
 	
 	UPhysicsHandleComponent* GetPhysicsHandle() const;
 

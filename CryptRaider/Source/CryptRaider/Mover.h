@@ -26,9 +26,9 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void SetShouldMove(bool ShouldMove);
-
-	bool GetShouldMove() const;
+	void SetShouldOpen();
+	
+	void SetShouldClose();
 
 	UPROPERTY(BlueprintAssignable)
 	FOnPlaySound OnPlaySound;
@@ -37,22 +37,33 @@ public:
 	FOnStopSound OnStopSound;
 	
 private:
+	void WillOpen(float DeltaTime);
+
+	void WillClose(float DeltaTime);
+
+	void ResetVariables();
+	
+	// Vector location
+	FVector CurrentLocation;
+	
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	FVector StartingLocation;
+
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	FVector TargetLocation;
+
+	// Move Offset & Time
 	UPROPERTY(EditAnywhere)
 	FVector MoveOffset;
 
 	UPROPERTY(EditAnywhere)
 	float MoveTime = 4;
 
+	bool ShouldPlaySfx;
 
-	bool ShouldMove = false;
+	bool ShouldMove;
 
-	public:
-		UPROPERTY(BlueprintReadOnly)
-	FVector OriginalLocation;
-
-	UPROPERTY(BlueprintReadWrite)
-	bool ShouldPlaySFX = false;
-
-	UPROPERTY(BlueprintReadOnly)
-	FVector TargetLocation;
+	bool ShouldOpen;
+	
+	bool ShouldClose;
 };
