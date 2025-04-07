@@ -70,29 +70,28 @@ void UMover::SetShouldClose()
 
 void UMover::WillOpen(float DeltaTime)
 {
-	if (CurrentLocation == TargetLocation)
-	{
-		ResetVariables();
-		return;
-	}
 
 	float Speed = FVector::Dist(StartingLocation, TargetLocation) / MoveTime;
 	FVector NewLocation = FMath::VInterpConstantTo(CurrentLocation, TargetLocation, DeltaTime, Speed);
 	GetOwner()->SetActorLocation(NewLocation);
+	
+	if (FVector::Dist(CurrentLocation, TargetLocation) <= 1.0f)
+	{
+		ResetVariables();
+	}
 }
 
 
 void UMover::WillClose(float DeltaTime)
 {
-	if (CurrentLocation == StartingLocation)
-	{
-		ResetVariables();
-		return;
-	}
-
 	float Speed = FVector::Dist(CurrentLocation, StartingLocation) / MoveTime;
 	FVector NewLocation = FMath::VInterpConstantTo(CurrentLocation, StartingLocation, DeltaTime, Speed);
 	GetOwner()->SetActorLocation(NewLocation);
+
+	if (FVector::Dist(CurrentLocation, StartingLocation) <= 1.0f)
+	{
+		ResetVariables();
+	}
 }
 
 

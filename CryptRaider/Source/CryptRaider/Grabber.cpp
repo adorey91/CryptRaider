@@ -65,7 +65,7 @@ void UGrabber::Grab()
 			HitResult.GetActor()->Tags.Add("Grabbed");
 		}
 		
-		// UE_LOG(LogTemp, Display, TEXT("Grabbed: %s"), *HitResult.GetActor()->GetName());
+		UE_LOG(LogTemp, Display, TEXT("Grabbed: %s"), *HitResult.GetActor()->GetName());
 		PhysicsHandle->GrabComponentAtLocationWithRotation(
 			HitComponent,
 			NAME_None,
@@ -125,8 +125,8 @@ void UGrabber::CheckForHighlight()
 	bool HasHit = false;
 	TArray<FHitResult> HitResults;
 
-	DrawDebugSphereTraceMulti(GetWorld(), Start, End, GrabRadius, EDrawDebugTrace::ForDuration,
-	HasHit, HitResults, FColor::Blue, FColor::Red, 1.0f);
+	// DrawDebugSphereTraceMulti(GetWorld(), Start, End, GrabRadius, EDrawDebugTrace::ForDuration,
+	// HasHit, HitResults, FColor::Blue, FColor::Red, 1.0f);
 	
 	if (HasHit)
 	{

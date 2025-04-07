@@ -22,15 +22,15 @@ void UTriggerComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	FString ThisName = GetOwner()->GetName();
 
 	if (Movers.Num() == 0 && !DoorRotator) // Check if Mover is null
 	{
-		UE_LOG(LogTemp, Error,
-		       TEXT("Mover or Door Rotator is null in UTriggerComponent! Did you forget to call SetMover? %s"),
-		       *ThisName);
+		// UE_LOG(LogTemp, Error,
+		//        TEXT("Mover or Door Rotator is null in UTriggerComponent! Did you forget to call SetMover? %s"),
+		//        *ThisName);
 		return;
 	}
+	FString ThisName = GetOwner()->GetName();
 
 	if (WeightedTrigger && WeightNeeded != CurrentWeight)
 	{
