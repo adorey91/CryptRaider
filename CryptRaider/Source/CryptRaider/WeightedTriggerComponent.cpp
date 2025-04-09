@@ -17,14 +17,13 @@ void UWeightedTriggerComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CheckCurrentWeight();
-	WeightNeeded = CurrentWeight;
+	WeightNeeded = 165;
 
 	GetWorld()->GetTimerManager().SetTimer(
 		WeightCheckTimerHandle, // timer handle
 		this,
 		&UWeightedTriggerComponent::CheckCurrentWeightLoop, // pointer to member function
-		1.0f, // interval
+		0.8f, // interval
 		true, // looping
 		30.0f // initial delay
 	);
