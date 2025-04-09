@@ -15,6 +15,7 @@ UTriggerComponent::UTriggerComponent()
 void UTriggerComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &UTriggerComponent::InitAfterDelay);
 }
 
 void UTriggerComponent::TickComponent(float DeltaTime, ELevelTick TickType,
@@ -22,51 +23,37 @@ void UTriggerComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	if (!bHasInitialized) return;
 
-	if (Movers.Num() == 0 && !DoorRotator) // Check if Mover is null
-	{
-		// UE_LOG(LogTemp, Error,
-		//        TEXT("Mover or Door Rotator is null in UTriggerComponent! Did you forget to call SetMover? %s"),
-		//        *ThisName);
+	if (Movers.Num() == 0) // Check if Mover is null
 		return;
-	}
-	FString ThisName = GetOwner()->GetName();
 
-	if (WeightedTrigger && WeightNeeded != CurrentWeight)
-	{
-		MoveObjects();
-		return;
-	}
-
-	if (WeightedTrigger && WeightNeeded == CurrentWeight)
-	{
-		DontMove();
-		return;
-	}
+	// if (WeightedTrigger && WeightNeeded != CurrentWeight)
+	// {
+	// 	// UE_LOG(LogTemp, Error,TEXT("Mover is Closing"));
+	// 	MoveObjects();
+	// 	return;
+	// }
+	//
+	// if (WeightedTrigger && WeightNeeded == CurrentWeight)
+	// {
+	// 	// UE_LOG(LogTemp, Error,TEXT("Mover is Opening"));
+	// 	DontMove();
+	// 	return;
+	// }
 
 	AActor* Actor = GetAcceptableActor();
-	if (Actor != nullptr)
-	{
-		UPrimitiveComponent* Component = Cast<UPrimitiveComponent>(Actor->GetRootComponent());
-		if (Component != nullptr)
-		{
-			Actor->AttachToComponent(this, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
-			Component->SetSimulatePhysics(false);
-		}
+	if (Actor == nullptr)
+		return;
 
-		if (MovesObjects)
-		{
-			MoveObjects();
-		}
-		else if (RotatesDoor)
-		{
-			DoorRotate(Actor);
-		}
-	}
-	else
-	{
-		DontMove();
-	}
+	UPrimitiveComponent* Component = Cast<UPrimitiveComponent>(Actor->GetRootComponent());
+	if (Component == nullptr)
+		return;
+
+	Actor->AttachToComponent(this, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+	Component->SetSimulatePhysics(false);
+
+	MoveObjects();
 }
 
 void UTriggerComponent::MoveObjects()
@@ -77,33 +64,6 @@ void UTriggerComponent::MoveObjects()
 		{
 			Mover->SetShouldOpen();
 		}
-	}
-}
-
-void UTriggerComponent::DoorRotate(AActor* Actor)
-{
-	if (!PlayAudio)
-	{
-		StartAudioEvent.Broadcast();
-		PlayAudio = true;
-	}
-	DoorRotator->SetShouldRotate(true);
-	// 🔹 Destroy the key after 2 seconds (adjust delay as needed)
-	DestroyActorWithDelay(Actor, 2.0f);
-}
-
-void UTriggerComponent::DontMove()
-{
-	if (Movers.Num() != 0)
-	{
-		for (UMover* Mover : Movers)
-		{
-			Mover->SetShouldClose();
-		}
-	}
-	else
-	{
-		DoorRotator->SetShouldRotate(false);
 	}
 }
 
@@ -123,10 +83,6 @@ void UTriggerComponent::SetMultipleMovers(TArray<UMover*> NewMover)
 	}
 }
 
-void UTriggerComponent::SetDoorRotator(UDoorRotator* NewDoorRotator)
-{
-	DoorRotator = NewDoorRotator;
-}
 
 AActor* UTriggerComponent::GetAcceptableActor() const
 {
@@ -144,17 +100,7 @@ AActor* UTriggerComponent::GetAcceptableActor() const
 	return nullptr;
 }
 
-void UTriggerComponent::DestroyActorWithDelay(AActor* Actor, float Delay)
+void UTriggerComponent::InitAfterDelay()
 {
-	if (Actor != nullptr)
-	{
-		FTimerHandle TimerHandle;
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [Actor]()
-		{
-			if (Actor)
-			{
-				Actor->Destroy();
-			}
-		}, Delay, false);
-	}
+	bHasInitialized = true;
 }

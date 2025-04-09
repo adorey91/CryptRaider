@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Components/BoxComponent.h"
 #include "Mover.h"
-#include "DoorRotator.h"
 #include "TriggerComponent.generated.h"
 
 
@@ -36,15 +35,7 @@ void SetMover(UMover* Mover);
 UFUNCTION(BlueprintCallable)
 void SetMultipleMovers(TArray<UMover*> Mover);
 
-	UFUNCTION(BlueprintCallable)
-	void SetDoorRotator(UDoorRotator* DoorRotator);
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Trigger")
-	float WeightNeeded;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Trigger")
-	float CurrentWeight;
-
+	
 	UPROPERTY(EditAnywhere)
 	bool WeightedTrigger;
 private:
@@ -52,25 +43,10 @@ private:
 UPROPERTY(EditAnywhere)
 FName UnlockTag;
 
-	UPROPERTY(EditAnywhere)
-	bool MovesObjects;
-
-	UPROPERTY(EditAnywhere)
-	bool RotatesDoor;
-
-
 	UFUNCTION()
 	void MoveObjects();
 
-	UFUNCTION()
-	void DoorRotate(AActor* Actor);
-
-	UFUNCTION()
-	void DontMove();
-
 	TArray<UMover*> Movers;
-
-	UDoorRotator* DoorRotator;
 
 AActor* GetAcceptableActor() const;
 
@@ -78,6 +54,7 @@ AActor* GetAcceptableActor() const;
 
 	bool Triggered = false;
 
-	UFUNCTION()
-	void DestroyActorWithDelay(AActor* Actor, float Delay);
+	bool bHasInitialized = false;
+
+	void InitAfterDelay();
 };
